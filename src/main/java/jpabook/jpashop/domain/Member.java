@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -17,6 +19,15 @@ public class Member {
     private String street;
 
     private String zipcode;
+
+    /* 양방향 설정(주문내역 조회)
+    * ※ 주문내역 조회를 Member에서 하는게 좋은 설계X (오히려 복잡해진다)
+    *    Order에서 FK를 가지고 있으므로 Order에서 시작하는게 좋다.
+    */
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
+
+
 
     public Long getId() {
         return id;
