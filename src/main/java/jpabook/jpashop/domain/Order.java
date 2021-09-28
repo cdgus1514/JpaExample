@@ -24,18 +24,24 @@ public class Order {
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
-    private ORderStatus status;
+    private OrderStatus status;
 
     /* 양방향 설정 */
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
 
+    /* 일대일 관계 */
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery;
+
+
     /* 양방향 연관관계 편의 메서드 */
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
-    }
+    } 
 
 
 
@@ -71,11 +77,11 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public ORderStatus getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(ORderStatus status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
